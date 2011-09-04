@@ -1,4 +1,18 @@
 Peoplesurf::Application.routes.draw do
+  root :to => 'pages#home'
+
+  match '/why', :to=> 'pages#why'
+
+  match '/faq', :to=> 'pages#faq'
+
+  match '/signup', :to => 'users#new' 
+
+  get "users/new"
+  
+  namespace :admin do
+    resources :users
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
