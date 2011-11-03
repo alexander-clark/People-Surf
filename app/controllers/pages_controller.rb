@@ -10,5 +10,5 @@ class PagesController < ApplicationController
 
   def faq
     @title = "FAQ"
-  end
+  end  
 end

@@ -7,7 +7,7 @@ Peoplesurf::Application.routes.draw do
 
   match '/signup', :to => 'users#new' 
 
-  get "users/new"
+  resources :users
   
   namespace :admin do
     resources :users
