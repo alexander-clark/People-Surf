@@ -1,4 +1,6 @@
 Peoplesurf::Application.routes.draw do
+  get "sessions/new"
+
   root :to => 'pages#home'
 
   match '/why', :to=> 'pages#why'
@@ -7,7 +9,12 @@ Peoplesurf::Application.routes.draw do
 
   match '/signup', :to => 'users#new' 
 
+  match '/signin', :to => 'sessions#new'
+  
+  match '/signout', :to => 'sessions#destroy'
+
   resources :users
+  resources :sessions, :only => [:new, :create, :destroy]
   
   namespace :admin do
     resources :users
