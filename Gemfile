@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.9'
 gem 'haml'
 gem "compass", ">= 0.11.5"
+gem "will_paginate", "3.0.pre2"
 
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,6 +13,7 @@ gem 'sqlite3', '1.3.3'
 group :development do
   gem 'annotate'
   gem 'rspec-rails', '2.6.1'
+  gem 'faker', '0.3.1'
 end
 
 group :test do
