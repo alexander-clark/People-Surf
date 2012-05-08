@@ -10,6 +10,10 @@
 #  salt               :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  admin              :boolean         default(FALSE)
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  username           :string(255)
 #
 
 require 'spec_helper'
@@ -20,7 +24,10 @@ describe User do
     @attr = {
       :email => "user@example.com",
       :password => "password",
-      :password_confirmation => "password",  
+      :password_confirmation => "password",
+      :first_name => "Fred",
+      :last_name => "Bloggs",
+      :username => "fbloggs12"
     }
   end
   
@@ -51,14 +58,15 @@ describe User do
   
   it "should reject duplicate e-mail addresses" do
     User.create!(@attr)
-    user_with_duplicate_email = User.new(@attr)
+    user_with_duplicate_email = User.new(@attr.merge(:username => "fbloggs13"))
     user_with_duplicate_email.should_not be_valid
   end
   
   it "should reject upcased duplicate e-mail" do
     User.create!(@attr)
     upcased_email = @attr[:email].upcase
-    User.new(@attr.merge(:email => upcased_email)).should_not be_valid
+    User.new(@attr.merge(:email => upcased_email,
+                         :username =>"floggs12")).should_not be_valid
   end
 
   describe "password validations" do
@@ -150,4 +158,41 @@ describe User do
       @user.should be_admin
     end
   end
+  
+  describe "username attribute" do
+    
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+    
+    it "should require a username" do
+      User.new(@attr.merge(:email => "xyzabc@example.com",
+                           :username => "")).should_not be_valid
+    end
+    
+    it "should reject duplicate usernames" do
+      User.new(@attr.merge(:email => "xyzabc@example.com")).should_not be_valid
+    end
+    
+    it "should reject upcased duplicate usernames" do
+      upcased_user = @attr[:username].upcase
+      User.new(@attr.merge(:email => "xyzabc@example.com",
+                           :username => upcased_user)).should_not be_valid
+    end
+  end
+  
+  describe "first name attribute" do
+    
+    it "should require a first name" do
+      User.new(@attr.merge(:first_name => nil)).should_not be_valid
+    end
+  end
+  
+  describe "last name attribute" do
+    
+    it "should require a last name" do
+      User.new(@attr.merge(:last_name => nil)).should_not be_valid
+    end
+  end
+  
 end

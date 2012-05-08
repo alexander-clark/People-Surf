@@ -9,6 +9,9 @@ describe "Users" do
       it "should not make a new user" do
         lambda do
           visit signup_path
+          fill_in "First name",   :with => "" 
+          fill_in "Last name",    :with => ""
+          fill_in "Username",     :with => ""  
           fill_in "Email",        :with => ""
           fill_in "Password",     :with => ""
           fill_in "Confirmation", :with => ""
@@ -22,8 +25,11 @@ describe "Users" do
     describe "success" do
       
       it "should make a new user" do
-        lambda do
+        expect {
           visit signup_path
+          fill_in "First name",   :with => "Fred"
+          fill_in "Last name",    :with => "Bloggs" 
+          fill_in "Username",     :with => "user"
           fill_in "Email",        :with => "user@example.com"
           fill_in "Password",     :with => "foobar"
           fill_in "Confirmation", :with => "foobar"
@@ -31,7 +37,7 @@ describe "Users" do
           response.should have_selector("div.flash.success",
                                         :content => "Welcome")
           response.should render_template('users/show')
-        end.should change(User, :count).by(1)
+        }.to change(User, :count).by(1)
       end
     end
   end

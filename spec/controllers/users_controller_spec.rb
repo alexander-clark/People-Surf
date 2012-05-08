@@ -41,9 +41,9 @@ describe UsersController do
       end
       
       it "should not create a user" do
-        lambda do
+        expect {
           post :create, :user => @attr
-        end.should_not change(User, :count)
+        }.to_not change(User, :count)
       end
       
       it "should have the right title" do
@@ -60,14 +60,15 @@ describe UsersController do
     describe "success" do
       
       before(:each) do
-        @attr = { :name => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar", }
+        @attr = { :first_name => "New", :last_name => "User",
+                  :email => "user@example.com", :password => "foobar",
+                  :password_confirmation => "foobar", :username => "newuser"}
       end
       
       it "should create a user" do
-        lambda do
+        expect {
           post :create, :user => @attr 
-        end.should change(User, :count).by(1)
+        }.to change(User, :count).by(1)
       end
       
       it "should redirect to the user show page" do
@@ -177,7 +178,8 @@ describe UsersController do
     describe "for signed-in users" do
       
       before(:each) do
-        wrong_user = Factory(:user, :email => "user@example.net")
+        wrong_user = Factory(:user, :email => "user@example.net",
+                             :username => "wronguser")
         test_sign_in(wrong_user)
       end
       
@@ -206,12 +208,12 @@ describe UsersController do
       
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        second = Factory(:user, :email => "another@example.com")
-        third = Factory(:user, :email => "athird@example.com")
+        second = Factory(:user, :email => "another@example.com", :username => "second")
+        third = Factory(:user, :email => "athird@example.com", :username => "third")
         
         @users = [@user, second, third]
         30.times do
-          @users << Factory(:user, :email => Factory.next(:email))
+          @users << Factory(:user, :email => Factory.next(:email), :username => Factory.next(:username))
         end
       end
       
@@ -267,14 +269,14 @@ describe UsersController do
     
     describe "as an admin user" do
       before(:each) do
-        admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        admin = Factory(:user, :email => "admin@example.com", :admin => true, :username => "admin")
         test_sign_in(admin)
       end
       
       it "should destroy the user" do
-        lambda do
+        expect {
           delete :destroy, :id => @user
-        end.should change(User, :count).by(-1)
+        }.to change(User, :count).by(-1)
       end
       
       it "should redirect to the users page" do

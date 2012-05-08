@@ -550,3 +550,13 @@ header nav.horizontal li a, footer nav.horizontal li a {
   text-decoration: none;
   padding-left: 5px;
 }
+
+/* line 11, ../../app/stylesheets/partials/_menu.sass */
+header nav.horizontal {
+  float: right;
+}
+
+/* line 14, ../../app/stylesheets/partials/_menu.sass */
+header h3 {
+  float: left;
+}

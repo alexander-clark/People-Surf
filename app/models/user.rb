@@ -10,12 +10,18 @@
 #  salt               :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  admin              :boolean         default(FALSE)
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  username           :string(255)
 #
 
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation, :first_name,
+                  :last_name, :username
+  attr_readonly :username
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -25,7 +31,14 @@ class User < ActiveRecord::Base
                     
   validates :password, :presence     => true,
                        :confirmation => true, 
-                       :length       => { :within => 6..40 } 
+                       :length       => { :within => 6..40 }
+  
+  validates :username, :presence => true,
+                       :uniqueness => { :case_sensitive => false }
+                       
+  validates :first_name, :presence => true 
+                       
+  validates :last_name, :presence => true 
 
   before_save :encrypt_password
   

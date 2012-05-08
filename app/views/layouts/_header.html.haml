@@ -1,6 +1,7 @@
 %header
-  %h3 Tutor Surf
-  %nav
+  %h3
+    =link_to "Tutor Surf", root_path
+  %nav.horizontal
     %ul
       %li= link_to "Home", root_path
       - if signed_in?
