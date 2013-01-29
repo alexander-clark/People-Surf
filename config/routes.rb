@@ -15,10 +15,7 @@ Peoplesurf::Application.routes.draw do
 
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
-  
-  namespace :admin do
-    resources :users
-  end
+  resources :subjects
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

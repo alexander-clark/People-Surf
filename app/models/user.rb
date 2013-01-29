@@ -18,10 +18,15 @@
 
 require 'digest'
 class User < ActiveRecord::Base
+  #kludge. note to self: do not name columns 'type'
+  User.inheritance_column = :classtype
   attr_accessor :password
   attr_accessible :email, :password, :password_confirmation, :first_name,
-                  :last_name, :username
-  attr_readonly :username
+                  :last_name, :username, :subject_ids, :type
+  attr_readonly :username, :type
+  
+  has_and_belongs_to_many :subjects
+   
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -29,6 +34,9 @@ class User < ActiveRecord::Base
                     :format => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
                     
+  validates :type, :presence => true
+  validates_inclusion_of :type, :in => 1..2
+  
   validates :password, :presence     => true,
                        :confirmation => true, 
                        :length       => { :within => 6..40 }

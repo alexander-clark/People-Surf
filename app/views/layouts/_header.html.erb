@@ -1,0 +1,25 @@
+<header>
+  <h3>
+    <%= link_to "Tutor Surf", root_path %>
+  </h3>
+  <nav class="horizontal">
+    <ul>
+      <li><%= link_to "Home", root_path %></li>
+      <% if signed_in? %>
+        <% if current_user.admin? %>
+          <li><%= link_to "Users", users_path %></li>
+        <% elsif current_user.type == 1 %>
+          <li><%= link_to "Tutors", users_path %></li>
+        <% else %>
+          <li><%= link_to "Students", users_path %></li>
+        <% end %>
+        <li><%= link_to "Subjects", subjects_path %></li>
+        <li><%= link_to "Profile", current_user %></li>
+        <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+        <li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+      <% else %>
+        <li><%= link_to "Sign in", signin_path %></li>
+      <% end %>
+    </ul>
+  </nav>
+</header>

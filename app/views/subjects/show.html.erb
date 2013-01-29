@@ -1,0 +1,14 @@
+<h1><%= @subject.name %></h1>
+<p><%= @subject.description %></p>
+
+<ul>
+<% @subject.descendants.each do |child| %>
+  <li><%= link_to child.name, child %> </li>
+<% end %>
+</ul>
+<h2>Users</h2>
+<ul>
+<% @subject.users.each do |user| %>
+  <li><%= link_to user.first_name+" "+user.last_name, user %></li>
+<% end %>
+</ul>

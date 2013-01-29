@@ -4,12 +4,27 @@ class UsersController < ApplicationController
   before_filter :admin_user,   :only => :destroy
   
   def index
-    @title = "All users"
-    @users = User.paginate(:page => params[:page])
+    
+    if current_user.admin?
+      if params[:type]
+        @title = "All users | Search"
+        @users = User.where("type = ?", "#{params[:type]}").paginate(:page => params[:page])
+      else
+        @title = "All users"
+        @users = User.paginate(:page => params[:page])
+      end
+    elsif current_user.type == 1
+      @title = "All Tutors"
+      @users = User.where("type = ?", "2").paginate(:page => params[:page])
+    else
+      @title = "All Students"
+      @users = User.where("type = ?", "1").paginate(:page => params[:page])
+    end
   end
   
   def show
     @user = User.find(params[:id])
+    @subjects = @user.subjects.find(:all)
   end
   
   def new
@@ -31,11 +46,14 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    @subs = @user.subject_ids
     @title = "Edit user"
   end
   
   def update
+    params[:user][:subject_ids] ||= []
     @user = User.find(params[:id])
+    @subs = @user.subject_ids
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
       redirect_to @user

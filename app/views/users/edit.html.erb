@@ -1,0 +1,43 @@
+<h1>Edit user</h1>
+
+<%= form_for(@user) do |f|%>
+  <%= render 'shared/error_messages', :object => f.object%>
+  <div class="field">
+    <%= f.label :first_name%>
+    <%= f.text_field :first_name%>
+  </div>
+  <div class="field">
+    <%= f.label :last_name%>
+    <%= f.text_field :last_name%>
+  </div>
+  <div class="field">
+    <%= f.label :username%>
+    <%= f.text_field :username%>
+  </div>
+  <div class="field">
+    <%= f.label :email%>
+    <%= f.text_field :email%>
+  </div>
+  <div class="field">
+    <%= f.label :password%>
+    <%= f.password_field :password%>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation%>
+    <%= f.password_field :password_confirmation%>
+  </div>
+  <div class="field">
+    <h2>Subjects</h2>
+    <ul>
+      <% for subject in Subject.find(:all) %>
+        <li><%= check_box_tag "user[subject_ids][]", subject.id, 
+              @subs.include?(subject.id) %>
+            <%= subject.name %>
+        </li>
+      <% end -%>
+    </ul>
+  </div>
+  <div class="actions">
+    <%= f.submit "Update"%>
+  </div>
+<%end%>

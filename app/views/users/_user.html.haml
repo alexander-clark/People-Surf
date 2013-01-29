@@ -1,8 +1,0 @@
--if current_user.admin?
-  -del = link_to "delete", user, :method => :delete, :confirm => "Are you sure?",
-                           :title => "Delete #{user.email}"
-%li
-  %span<
-    = link_to user.email, user
-    |&nbsp;
-    =del

@@ -1,25 +1,40 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.2.8'
 gem 'haml'
 gem "compass", ">= 0.11.5"
-gem "will_paginate", "3.0.pre2"
+gem "will_paginate"
+gem "ancestry"
 
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3', '1.3.3'
+gem 'sqlite3'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  
+  gem 'uglifier'
+end
+
+gem 'jquery-rails'
 
 group :development do
   gem 'annotate'
-  gem 'rspec-rails', '2.6.1'
-  gem 'faker', '0.3.1'
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'faker'
 end
 
 group :test do
-  gem 'rspec-rails', '2.6.1'
-  gem 'spork', '0.9.0.rc8'
-  gem 'webrat', '0.7.1'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'rb-fsevent'
+  gem 'growl'
+  gem 'guard-spork'
+  gem 'spork'
+  gem 'webrat'
   gem 'factory_girl_rails'
 end
 

@@ -1,0 +1,38 @@
+<h1>Sign up</h1>
+<%= form_for @user do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <p>I am a </p>
+    <%= f.radio_button :type, '1', :checked => true  %>
+    <%= f.label :type, 'Student', :value => '1' %>
+    <%= f.radio_button :type, '2' %>
+    <%= f.label :type, 'Tutor', :value => '2' %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>

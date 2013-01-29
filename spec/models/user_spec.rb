@@ -22,6 +22,7 @@ describe User do
 
   before :each do
     @attr = {
+      :type => 1,
       :email => "user@example.com",
       :password => "password",
       :password_confirmation => "password",
@@ -33,6 +34,11 @@ describe User do
   
   it "should create a new instance given valid attributes" do
     User.create!(@attr)
+  end
+  
+  it "should require a type" do
+    no_type_user = User.new(@attr.merge(:type => nil))
+    no_type_user.should_not be_valid
   end
   
   it "should require an e-mail" do

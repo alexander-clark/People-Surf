@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411174507) do
+ActiveRecord::Schema.define(:version => 20120518223421) do
+
+  create_table "subjects", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "ancestry"
+  end
+
+  add_index "subjects", ["ancestry"], :name => "index_subjects_on_ancestry"
+
+  create_table "subjects_users", :id => false, :force => true do |t|
+    t.integer "subject_id"
+    t.integer "user_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

@@ -1,0 +1,15 @@
+<h1>All users</h1>
+<% if current_user.admin? %>
+<%= link_to "Students", users_path(:type => 1) %>
+|
+<%= link_to "Tutors", users_path(:type => 2) %>
+|
+<%= link_to "All", users_path %>
+<% end %>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <%= render @users %>
+</ul>
+<%= will_paginate %>
